@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fractales en SVG</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="main.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Fractales en SVG en tu navegador</h1>
+    </header>
+    <main>
+        <section id="left-panel">
+            <h2>Código</h2>
+            <div id="code-container">
+                <textarea id="code-content">
+function fractal(x, y, r, level) {
+    // circle(x,y,r), rect(x,y,w,h) & line(x1,y1,x2,y2) disponibles
+    // llamarlas añade elementos SVG al dibujo de la derecha
+    circle(x, y, r);
+    if (level > 1) {
+        fractal(x - r, y, r / 2,level-1);
+        fractal(x + r, y, r / 2,level-1);
+        fractal(x, y - r, r / 2,level-1);
+        fractal(x, y + r, r / 2,level-1);
+    }
+}
+fractal(250, 125, 80, level);
+                </textarea>
+            </div>
+            <div class="controls">
+              <select id="example-select">
+                  <option value="vacío">Fractal vacío</option>
+                  <option value="curva de hilbert">Hilbert</option>
+                  <option value="esferas">Esferas</option>
+              </select>
+              <select id="nivel">
+                <option value="1">Nivel 1</option>
+                <option value="2">Nivel 2</option>
+                <option value="3">Nivel 3</option>
+                <option value="4">Nivel 4</option>
+                <option value="5">Nivel 5</option>
+                <option value="6">Nivel 6</option>
+                <option value="7">Nivel 7</option>
+                <option value="8">Nivel 8</option>
+                <option value="9">Nivel 9</option>
+                <option value="10">Nivel 10</option>
+            </select>
+              <button id="run-button">Run</button>
+            </div>
+            </section>
+        <section id="right-panel">
+            <h2>Resultado</h2>
+            <svg id="svg-output"></svg>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Manuel Freire Morán (manuel.freire@fdi.ucm.es) - ver <a href="https://github.com/manuel-freire/interactive-svg-fractals">repositorio en github</a></p>
+    </footer>
+
+</html>
