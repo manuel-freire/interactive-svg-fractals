@@ -54,7 +54,28 @@ function t(x, y, len, level) {
 }
 t(250, 250, 250, level);
 `},
-];
+    {name: 'Curva de Koch', code: `
+let p = [70, 250] // pos inicial
+function walk(step, a) {
+    const q = [p[0] + step*Math.cos(a), p[1] + step*Math.sin(a)];
+    line(p[0], p[1], q[0], q[1]);
+    p = q;
+}
+// level = nivel de recursión elegido
+// step = tamaño de paso actual
+// a = angulo actual
+function koch(step, a, level) {
+    if (level <= 1) {
+       walk(step, a);
+    } else {
+       koch(step/3, a+0, level-1);
+       koch(step/3, a-Math.PI/3, level-1);
+       koch(step/3, a+Math.PI/3, level-1);
+       koch(step/3, a+0, level-1);
+    }
+}
+koch(600, 0, level);
+`},];
 
 // Main runtime for interactive SVG output
 document.addEventListener('DOMContentLoaded', () => {
