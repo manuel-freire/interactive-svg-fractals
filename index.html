@@ -16,25 +16,10 @@
             <h2>Código</h2>
             <div id="code-container">
                 <textarea id="code-content">
-function fractal(x, y, r, level) {
-    // circle(x,y,r), rect(x,y,w,h) & line(x1,y1,x2,y2) disponibles
-    // llamarlas añade elementos SVG al dibujo de la derecha
-    circle(x, y, r);
-    if (level > 1) {
-        fractal(x - r, y, r / 2,level-1);
-        fractal(x + r, y, r / 2,level-1);
-        fractal(x, y - r, r / 2,level-1);
-        fractal(x, y + r, r / 2,level-1);
-    }
-}
-fractal(250, 125, 80, level);
                 </textarea>
             </div>
             <div class="controls">
               <select id="example-select">
-                  <option value="vacío">Fractal vacío</option>
-                  <option value="curva de hilbert">Hilbert</option>
-                  <option value="esferas">Esferas</option>
               </select>
               <select id="nivel">
                 <option value="1">Nivel 1</option>

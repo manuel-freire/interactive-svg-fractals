@@ -1,9 +1,68 @@
+// Sample Fractals
+const examples = [
+    {name: 'Vacío', code: `
+// level = nivel de recursión elegido
+function f(x, y, level) {
+    // circle(x,y,r), rect(x,y,w,h) & line(x1,y1,x2,y2) disponibles
+    // llamar a estas primitivas añade elementos SVG al dibujo de la derecha 
+    // tu código debería hacer llamadas recursivas con level decreciente       
+}
+f(250, 250, level);        
+`},
+    {name: 'Flor con círculos (Tema 4 - 9)', code: `
+function fractal(x, y, r, level) {
+    // circle(x,y,r), rect(x,y,w,h) & line(x1,y1,x2,y2) disponibles
+    // llamarlas añade elementos SVG al dibujo de la derecha
+    circle(x, y, r);
+    if (level > 1) {
+        fractal(x - r, y, r / 2,level-1);
+        fractal(x + r, y, r / 2,level-1);
+        fractal(x, y - r, r / 2,level-1);
+        fractal(x, y + r, r / 2,level-1);
+    }
+}
+fractal(250, 160, 80, level);
+`}, 
+    {name: 'Flor con cuadrados (similar al anterior)', code: `   
+function fractal(x, y, r, level) {
+    // circle(x,y,r), rect(x,y,w,h) & line(x1,y1,x2,y2) disponibles
+    // llamarlas añade elementos SVG al dibujo de la derecha
+    rect(x-r/2, y-r/2, r, r);
+    if (level > 1) {
+        fractal(x - r, y, r / 2,level-1);
+        fractal(x + r, y, r / 2,level-1);
+        fractal(x, y - r, r / 2,level-1);
+        fractal(x, y + r, r / 2,level-1);
+    }
+}
+fractal(250, 160, 80, level);
+`},
+    {name: 'Triángulo de Sierpinski', code: `
+
+// level = nivel de recursión elegido
+function t(x, y, len, level) {
+    const h = len * -Math.cos(Math.PI/6); 
+    if (level <= 1) {
+       line(x, y, x+len, y); // base of triangle
+       line(x, y, x+len/2, y+h); // up-slope
+       line(x+len/2, y+h, x+len, y); // down-slope
+    } else {
+       t(x, y, len/2, level-1); // bottom-left
+       t(x+len/4, y+h/2, len/2, level-1); // top
+       t(x+len/2, y, len/2, level-1); // right
+    }
+}
+t(250, 250, 250, level);
+`},
+];
+
 // Main runtime for interactive SVG output
 document.addEventListener('DOMContentLoaded', () => {
     const runButton = document.getElementById('run-button');
     const codeArea = document.getElementById('code-content');
     const svgOutput = document.getElementById('svg-output');
     const levelSelect = document.getElementById('nivel');
+    const exampleSelect = document.getElementById('example-select');
 
     function renderFromCode() {
         const userCode = codeArea.value || '';
@@ -65,7 +124,23 @@ document.addEventListener('DOMContentLoaded', () => {
     runButton.addEventListener('click', renderFromCode);
     console.log('Ready to render!');
 
-    // Optional: run once on load
-    // renderFromCode();
+    for (const ex of examples) {
+        const option = document.createElement('option');
+        option.value = ex.name;
+        option.textContent = ex.name;
+        exampleSelect.appendChild(option);
+    }
+    exampleSelect.addEventListener('change', () => {
+        const selectedExample = examples.find(ex => ex.name === exampleSelect.value);
+        if (selectedExample) {
+            codeArea.value = selectedExample.code;
+            renderFromCode();
+        }
+    });
+
+    // Initial render (1st example)
+    exampleSelect.value = examples[0].name;
+    codeArea.value = examples[0].code;
+    renderFromCode();
 });
 
