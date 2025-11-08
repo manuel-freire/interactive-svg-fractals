@@ -20,9 +20,9 @@ f(0, 0, level);
     {
       name: 'Curva de Hilbert (Tema 4 - 17)',
       code: `
-let p = [0, 1]; // pos
-let step = 1;    // longitud de paso
-let a = 0;         // angulo
+let p = [.01, 1]; // pos
+let step = .7;    // longitud de paso
+let a = 0;        // angulo
 function forward() {
     const q = [p[0] + step*Math.cos(a), p[1] + step*Math.sin(a)];
     line(p[0], p[1], q[0], q[1]);
