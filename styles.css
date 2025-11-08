@@ -57,6 +57,12 @@ main {
   display: block;
 }
 
+#svg-info {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
 /* Make the code container fill remaining space inside left-panel and scroll independently */
 #code-container {
   display: flex;

@@ -1,18 +1,78 @@
 // Sample Fractals
 const examples = [
-    {name: 'Vacío', code: `
-// level = nivel de recursión elegido
+    {
+      name: 'Vacío', 
+      code: `
+// define una o más funciones recursivas
 function f(x, y, level) {
     // circle(x,y,r), rect(x,y,w,h) & line(x1,y1,x2,y2) disponibles
     // llamar a estas primitivas añade elementos SVG al dibujo de la derecha 
     // tu código debería hacer llamadas recursivas con level decreciente       
 }
+
+// llama a estas funciones
+// desde fuera sólo llega "level", el nivel de recursión elegido
 f(250, 250, level);        
-`},
-    {name: 'Flor con círculos (Tema 4 - 9)', code: `
+`
+  },
+    {
+      name: 'Curva de Hilbert (Tema 4 - 17)',
+      code: `
+let p = [70, 700]; // pos
+let step = 400;    // longitud de paso
+let a = 0;         // angulo
+function forward() {
+    const q = [p[0] + step*Math.cos(a), p[1] + step*Math.sin(a)];
+    line(p[0], p[1], q[0], q[1]);
+    p = q;
+}
+function left() {
+    a -= Math.PI/2;
+}
+function right() {
+    a += Math.PI/2;
+}
+function Ha(n) {
+    if (n > 0) {
+        left();
+        Hb(n - 1);
+        forward();
+        right();
+        Ha(n - 1);
+        forward();
+        Ha(n - 1);
+        right();
+        forward();
+        Hb(n - 1);
+        left();
+    }
+}
+function Hb(n) {
+    if (n > 0) {
+        right();
+        Ha(n - 1);
+        forward();
+        left();
+        Hb(n - 1);
+        forward();
+        Hb(n - 1);
+        left();
+        forward();
+        Ha(n - 1);
+        right();
+    }
+}
+
+// en cada nivel se reduce el avance
+for (let i=1; i<level; i++) step *= .46;
+
+Ha(level);
+`
+    },
+    {
+      name: 'Flor con círculos (Tema 4 - 9)', 
+      code: `
 function fractal(x, y, r, level) {
-    // circle(x,y,r), rect(x,y,w,h) & line(x1,y1,x2,y2) disponibles
-    // llamarlas añade elementos SVG al dibujo de la derecha
     circle(x, y, r);
     if (level > 1) {
         fractal(x - r, y, r / 2,level-1);
@@ -22,11 +82,12 @@ function fractal(x, y, r, level) {
     }
 }
 fractal(250, 160, 80, level);
-`}, 
-    {name: 'Flor con cuadrados (similar al anterior)', code: `   
+`
+  }, 
+    {
+      name: 'Flor con cuadrados (similar al anterior)', 
+      code: `   
 function fractal(x, y, r, level) {
-    // circle(x,y,r), rect(x,y,w,h) & line(x1,y1,x2,y2) disponibles
-    // llamarlas añade elementos SVG al dibujo de la derecha
     rect(x-r/2, y-r/2, r, r);
     if (level > 1) {
         fractal(x - r, y, r / 2,level-1);
@@ -36,10 +97,12 @@ function fractal(x, y, r, level) {
     }
 }
 fractal(250, 160, 80, level);
-`},
-    {name: 'Triángulo de Sierpinski', code: `
+`
+    },
+    {
+      name: 'Triángulo de Sierpinski', 
+      code: `
 
-// level = nivel de recursión elegido
 function t(x, y, len, level) {
     const h = len * -Math.cos(Math.PI/6); 
     if (level <= 1) {
@@ -53,15 +116,36 @@ function t(x, y, len, level) {
     }
 }
 t(250, 250, 250, level);
-`},
-    {name: 'Curva de Koch', code: `
+`
+    },
+    {
+      name: 'Alfombra de Sierpinski', 
+      code: `
+
+function t(x, y, len, n) {
+    if (n < 1) {
+       rect(x, y, len, len, {fill: 'black'});
+    } else {
+       let w = len/3;
+       t(x, y+0*w, w, n-1); t(x, y+1*w, w, n-1); t(x, y+2*w, w, n-1);
+       x += w;
+       t(x, y+0*w, w, n-1); /*  centro vacio */; t(x, y+2*w, w, n-1);
+       x += w;
+       t(x, y+0*w, w, n-1); t(x, y+1*w, w, n-1); t(x, y+2*w, w, n-1);
+    }
+}
+t(50, 50, 500, level);
+`
+    },    
+    {
+      name: 'Curva de Koch',
+      code: `
 let p = [70, 250] // pos inicial
 function walk(step, a) {
     const q = [p[0] + step*Math.cos(a), p[1] + step*Math.sin(a)];
     line(p[0], p[1], q[0], q[1]);
     p = q;
 }
-// level = nivel de recursión elegido
 // step = tamaño de paso actual
 // a = angulo actual
 function koch(step, a, level) {
@@ -75,7 +159,34 @@ function koch(step, a, level) {
     }
 }
 koch(600, 0, level);
-`},];
+`
+  },
+    {
+      name: 'Copo de nieve de Koch',
+      code: `
+let p = [70, 250] // pos inicial
+function walk(step, a) {
+    const q = [p[0] + step*Math.cos(a), p[1] + step*Math.sin(a)];
+    line(p[0], p[1], q[0], q[1]);
+    p = q;
+}
+// step = tamaño de paso actual
+// a = angulo actual
+function koch(step, a, level) {
+    if (level <= 1) {
+       walk(step, a);
+    } else {
+       koch(step/3, a+0, level-1);
+       koch(step/3, a-Math.PI/3, level-1);
+       koch(step/3, a+Math.PI/3, level-1);
+       koch(step/3, a+0, level-1);
+    }
+}
+koch(600, 0, level);
+koch(600, Math.PI*2/3, level); // cerramos la curva con 2 lados mas
+koch(600, Math.PI*4/3, level);
+`},
+];
 
 // Main runtime for interactive SVG output
 document.addEventListener('DOMContentLoaded', () => {
@@ -84,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const svgOutput = document.getElementById('svg-output');
     const levelSelect = document.getElementById('nivel');
     const exampleSelect = document.getElementById('example-select');
+    const svgInfo = document.getElementById('svg-info');
 
     function renderFromCode() {
         const userCode = codeArea.value || '';
@@ -96,26 +208,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Helper functions exposed to user code
         const helpers = {
             circle: (x, y, r, opts = {stroke: 'black', 'stroke-width': 0.5, fill: 'none'}) => {
-                const attrs = [];
-                attrs.push(`cx="${x}"`);
-                attrs.push(`cy="${y}"`);
-                attrs.push(`r="${r}"`);
-                attrs.push(`stroke="${opts.stroke}"`);
-                attrs.push(`stroke-width="${opts['stroke-width']}"`);
-                attrs.push(`fill="${opts['fill']}"`);
+                const attrs = [`cx="${x}"`, `cy="${y}"`, `r="${r}"`, 
+                  `stroke="${opts.stroke}"`, 
+                  `stroke-width="${opts['stroke-width']}"`, 
+                  `fill="${opts['fill']}"`];
                 svgContent += `<circle ${attrs.join(' ')} />\n`;
             },
-            rect: (x, y, w, h, opts = {stroke: 'black', 'stroke-width': 1, fill: 'none'}) => {
-                const attrs = [`x="${x}"`, `y="${y}"`, `width="${w}"`, `height="${h}"`];
-                attrs.push(`stroke="${opts.stroke}"`);
-                attrs.push(`stroke-width="${opts['stroke-width']}"`);
-                attrs.push(`fill="${opts['fill']}"`);
+            rect: (x, y, w, h, opts = {stroke: 'black', 'stroke-width': 0.5, fill: 'none'}) => {
+                const attrs = [`x="${x}"`, `y="${y}"`, `width="${w}"`, `height="${h}"`,
+                  `stroke="${opts.stroke}"`, 
+                  `stroke-width="${opts['stroke-width']}"`, 
+                  `fill="${opts['fill']}"`];
                 svgContent += `<rect ${attrs.join(' ')} />\n`;
             },
-            line: (x1, y1, x2, y2, opts = {stroke: 'black', 'stroke-width': 1}) => {
-                const attrs = [`x1="${x1}"`, `y1="${y1}"`, `x2="${x2}"`, `y2="${y2}"`];
-                attrs.push(`stroke="${opts.stroke}"`);
-                attrs.push(`stroke-width="${opts['stroke-width']}"`);
+            line: (x1, y1, x2, y2, opts = {stroke: 'black', 'stroke-width': 0.5}) => {
+                const attrs = [`x1="${x1}"`, `y1="${y1}"`, `x2="${x2}"`, `y2="${y2}"`,
+                  `stroke="${opts.stroke}"`, 
+                  `stroke-width="${opts['stroke-width']}"`];
                 svgContent += `<line ${attrs.join(' ')} />\n`;
             }
         };
@@ -126,11 +235,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const userFn = new Function('level', 'circle', 'rect', 'line', userCode);
             // call with helper functions that close over svgContent
             userFn(level, helpers.circle, helpers.rect, helpers.line);
+            svgInfo.textContent = `SVG generado: ${svgContent.length} caracteres`;
         } catch (e) {
             svgContent = `<text x="10" y="20" fill="red">Runtime error: ${String(e).replace(/</g, '&lt;')}</text>`;
         }
-        console.log('Generated SVG content:', svgContent);
-
+        
         // Set SVG content inside the existing <svg id="svg-output"> element
         try {
             svgOutput.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
@@ -139,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
             // fallback: display error text node
             svgOutput.textContent = 'Unable to render SVG';
+            console.log('SVG rendering error:', e);
         }
     }
 
