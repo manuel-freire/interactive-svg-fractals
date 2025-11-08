@@ -38,8 +38,12 @@
             </section>
         <section id="right-panel">
             <h2>Resultado</h2>
-            <span id="svg-info"></span>
             <svg id="svg-output"></svg>
+            <div>
+              <span id="svg-info" class="output-info"></span>
+              <input type="range" id="line-slider" min="0" max="10" step="1" value="0"/>
+              <label for="line-slider" class="output-info">Líneas a mostrar: <span id="line-slider-value">0</span></label>
+            </div>
         </section>
     </main>
     <footer>

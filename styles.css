@@ -57,10 +57,10 @@ main {
   display: block;
 }
 
-#svg-info {
+.output-info {
   font-size: 0.85rem;
   color: #555;
-  margin-bottom: 0.5rem;
+  display: block;
 }
 
 /* Make the code container fill remaining space inside left-panel and scroll independently */
@@ -114,7 +114,8 @@ footer {
   main {
     flex-direction: column;
   }
+  #code-container, #svg-output {
+    height: 500px;
+    min-height: 500px;
+  }
 }
-
-/* Small utilities */
-.hidden { display: none !important; }
