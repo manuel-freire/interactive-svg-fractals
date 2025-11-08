@@ -2,7 +2,7 @@
 
 ## Contexto
 
-En la asignatura de Fundamentos de Algoritmia (FAL) de los grados de Ingeniería Informática, Ingeniería del Software e Ingeniería de Computadores de la [FdI-UCM](informatica.ucm.es) se enseña diseño de algoritmos recursivos. Uno de los profesores usa fractales como ejemplo de recursión, y en sus transparencias propone pintarlos usando [SVG](https://en.wikipedia.org/wiki/SVG).  Pero los ejemplos en FAL usan C++, lo cual implica que, para pintar un fractal, tienes que escribir tu programa, compilarlo, ejecutarlo, y abrir el resultado en un navegador: 4 pasos.
+En la asignatura de Fundamentos de Algoritmia (FAL) de los grados de Ingeniería Informática, Ingeniería del Software e Ingeniería de Computadores de la [FdI-UCM](informatica.ucm.es) se enseña diseño de algoritmos recursivos. Uno de los profesores usa fractales como ejemplo de recursión, y en sus transparencias propone pintarlos usando [SVG](https://en.wikipedia.org/wiki/SVG). Pero los ejemplos en FAL usan C++, lo cual implica que, para pintar un fractal, tienes que escribir tu programa, compilarlo, ejecutarlo, y abrir el resultado en un navegador: 4 pasos.
 
 Esta aplicación web lo hace todo en 1 paso, porque si programas en JS en lugar de C++, el navegador puede compilar, ejecutar, y mostrar el resultado en un único paso, todo en una única página. Y, a nivel de sintaxis básica, C++ y JS son muy similares. Varios de los fractales son código copiado y pegado de las transparencias del grupo FAL-B (mínimamente adaptados para JS).
 
@@ -19,3 +19,8 @@ Fractales famosos incluidos en la página a modo de ejemplo:
 ## Contribuye
 
 Puedes proponer incluir tus propios fractales como ejemplos enviándome un "pull request". ¡Cualquier otra mejora será también bienvenida!
+
+## Agradecimientos
+
+A mi tío Manuel, que me enseñó cómo pintar el Triángulo de Sierpinski con sólo [un dado y un lápiz](https://en.wikipedia.org/wiki/Chaos_game).
+ 
