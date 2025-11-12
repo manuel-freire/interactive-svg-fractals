@@ -20,8 +20,8 @@ f(0, 0, level);
     {
       name: 'Curva de Hilbert (Tema 4 - 17)',
       code: `
-let p = [.01, 1]; // pos
-let step = .7;    // longitud de paso
+let p = [.1, .9]; // pos
+let step = .6;    // longitud de paso
 let a = 0;        // angulo
 function forward() {
     const q = [p[0] + step*Math.cos(a), p[1] + step*Math.sin(a)];
@@ -66,11 +66,47 @@ function Hb(n) {
 }
 
 // en cada nivel se reduce el avance
-for (let i=1; i<level; i++) step *= .46;
-
-Ha(level);
+for (let i=1; i<level; i++) step *= .447;
 `
     },
+    {
+      name: 'Curva C de Lévy', 
+      code: `
+let p = [.25, .9]; // pos
+let step = .5;    // longitud de paso
+let a = 0;        // angulo
+function forward() {
+    const q = [p[0] + step*Math.cos(a), p[1] + step*Math.sin(a)];
+    line(p[0], p[1], q[0], q[1]);
+    p = q;
+}
+function turn_cw() {
+    a -= Math.PI/4;
+}
+function turn_acw() {
+    a += Math.PI/4;
+}
+function curve(n) {
+    if (n > 0) {
+        turn_cw();
+        curve(n - 1);
+        turn_acw();
+        turn_acw();
+        curve(n - 1);
+        turn_cw();
+    } else {
+        forward();
+    }
+}
+
+// multiplicamos nivel por 2, porque hacen falta muchos niveles para ver buen detalle
+level *= 2;
+// en cada nivel se reduce el avance
+const factor = 1 / Math.sqrt(2);
+for (let i=1; i<level; i++) step *= factor;
+curve(level-1)
+`
+    },     
     {
       name: 'Flor con círculos (Tema 4 - 9)', 
       code: `
@@ -85,7 +121,7 @@ function fractal(x, y, r, level) {
 }
 fractal(.5, .5, .2, level);
 `
-  }, 
+    }, 
     {
       name: 'Flor con cuadrados (similar al anterior)', 
       code: `   
